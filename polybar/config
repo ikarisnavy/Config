@@ -1,0 +1,442 @@
+;-----------------------------------------------------------------------
+;=======================================================================
+;
+; ###### #    #    #    ######  ###                  @
+;   ##   #   #    # #   #     #  #                  ###
+;   ##   #  #    #   #  #     #  #                  ###
+;   ##   ###    #     # ######   #            ***************
+;   ##   #  #   ####### #   #    #            ***************
+;   ##   #   #  #     # #    #   #                  ###
+; ###### #    # #     # #     # ###                 ###
+;                                                   ###
+;                                                   ###
+;                                                   ###
+;
+;=======================================================================
+;-----------------------------------------------------------------------
+
+
+[colors]
+background = #001a222d
+background-alt = #5E7373
+foreground = #f8f8f2
+foreground-alt = #c8c8d2
+primary = #f8f8f2
+secondary = #c8c8d2
+format = <label>
+alert = #bd2c40
+color-0 = #fdf498
+
+
+[bar/bar]
+;monitor = LVDS1
+width = 100%
+height = 20
+enable-ipc = true
+;offset-x = 1%
+;offset-y = 0.5%
+radius = 8.0
+fixed-center = false
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+;line-size = 2
+;line-color = #f00
+
+border-size = 3
+border-color = #00000000
+
+padding-left = 0
+padding-right = 0
+
+module-margin-left = 1
+module-margin-right = 0
+
+font-0 = "Iosevka Nerd Font:size=10;3"
+;font-1 = Hack Nerd Regular:style=Regular:size=10:antialias=false;2
+font-2 = Material Design Icons:style=Regular:size=10:anttialias=false;2
+font-3 = Material Icons:style=Regular:size=10:antialias=false;2
+font-4 = FontAwesome:style=Solid:size=10;3
+font-5 = Iosevka SemiBold:style=Regular:size=9.1;3.5
+
+
+modules-left = bspwm term web files sep2
+modules-center = xwindow
+modules-right = sep2 alsa now-playing memory mpd cpu wlan eth date
+
+tray-position = right
+tray-padding = 1
+;tray-background = #0063ff
+
+;wm-restack = bspwm
+;wm-restack = i3
+
+;override-redirect = true
+
+;scroll-up = bspwm-desknext
+;scroll-down = bspwm-deskprev
+
+;scroll-up = i3wm-wsnext
+;scroll-down = i3wm-wsprev
+
+cursor-click = pointer
+cursor-scroll = ns-resize
+
+[module/xwindow]
+type = internal/xwindow
+label = %title:0:35:...%
+
+;[module/xkeyboard]
+;type = internal/xkeyboard
+;blacklist-0 = num lock
+
+;format-prefix = 
+;format-prefix-foreground = ${colors.foreground-alt}
+;format-prefix-underline = ${colors.secondary}
+
+;label-layout = %layout%
+;label-layout-underline = ${colors.secondary}
+
+;label-indicator-padding = 2
+;label-indicator-margin = 1
+;label-indicator-background = ${colors.secondary}
+;label-indicator-underline = ${colors.secondary}
+
+
+
+[module/bspwm]
+type = internal/bspwm
+
+label-focused = %name%
+label-focused-background = ${colors.background-alt}
+label-focused-underline= ${colors.primary}
+label-focused-padding = 1
+
+label-occupied = %name%
+label-occupied-padding = 1
+
+label-urgent = %name%!
+label-urgent-background = ${colors.alert}
+label-urgent-padding = 1
+
+label-empty = %name%
+label-empty-foreground = ${colors.foreground-alt}
+label-empty-padding = 1
+
+label-occupied-background = #39465D
+label-empty-background = #002
+
+; Separator in between workspaces
+; label-separator = |
+
+;;Apps
+ 
+[module/term]
+type = custom/text
+
+content = "%{T3}%{T-}"
+content-foreground = ${color.black}
+content-background = ${color.bg}
+content-padding = 1
+
+click-left  = lxterminal &
+
+[module/web]
+type = custom/text
+
+content = "%{T3}%{T-}"
+content-foreground = ${color.white}
+content-background = ${color.bg}
+content-padding = 1
+
+click-left  = firefox &
+
+[module/files]
+type = custom/text
+
+content = "%{T3}%{T-}"
+content-foreground = ${color.blue}
+content-background = ${color.bg}
+content-padding = 1
+
+click-left  = thunar &
+
+
+[module/mpd]
+type = internal/mpd
+;format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
+format-online = <label-song>
+;icon-prev = 
+;icon-stop = 
+icon-play = 
+icon-pause = 
+;icon-next = 
+
+label-song-maxlen = 25
+label-song-ellipsis = true
+
+[module/now-playing]
+type = custom/script
+tail = true
+;format-prefix = ""
+format = <label>
+exec = /home/ikari/.config/script/now-playing
+click-right = "kill -USR1 $(pgrep --oldest --parent %pid%)"
+label-background = #2F6C67
+label-foreground = #112
+
+
+[module/xbacklight]
+type = internal/xbacklight
+
+format = <label> <bar>
+label = 滛
+
+bar-width = 10
+bar-indicator =
+bar-indicator-foreground = #fff
+bar-indicator-font = 2
+bar-fill = ─
+bar-fill-font = 2
+bar-fill-foreground = #9f78e1
+bar-empty = ─
+bar-empty-font = 2
+bar-empty-foreground = ${colors.foreground-alt}
+
+[module/backlight-acpi]
+inherit = module/xbacklight
+type = internal/backlight
+card = intel_backlight
+
+
+[module/cpu]
+type = internal/cpu
+interval = 2
+format-prefix = "礪"
+format-padding = 1
+;format-prefix-foreground = ${colors.text}
+format-foreground = #112
+;format-prefix-background = ${color.cyan}
+format-background = #6BB3CE
+label = %percentage:2%%
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix =" 力 "
+format-foreground = #112
+format-background = #d37a79
+label = %mb_used%
+
+[module/wlan]
+type = internal/network
+interface = wlp2s0b1
+interval = 3.0
+format-connected-background = #A07Abb
+format-connected = <ramp-signal> <label-connected>
+label-connected-foreground = #112
+label-connected = %essid%
+format-disconnected =
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground-alt}
+
+ramp-signal-0 = 
+ramp-signal-1 = 
+ramp-signal-2 = 直
+ramp-signal-3 = 直
+ramp-signal-4 = 直
+ramp-signal-foreground = #112
+
+[module/eth]
+type = internal/network
+interface = enp0s31f6
+interval = 3.0
+
+;format-connected-underline = #55aa55
+format-connected-prefix = " "
+format-connected-prefix-foreground = #112
+label-connected = %local_ip%
+
+format-disconnected =
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = #112
+
+;[module/date]
+;type = internal/date
+;interval = 5
+
+;date =
+;date-alt = " %A"
+
+;time = %l:%M %p
+;time-alt = %A | %H:%M
+
+;format-prefix = 
+;format-background = #fcd485
+format-prefix-foreground = #112
+
+;label = %date% %time%
+
+[module/date]
+type = internal/date
+interval = 15
+date = "%l:%M %p "
+date-alt = 
+time = 
+time-alt = "%a-%b-%d"
+label = " %date%%time% "
+format-padding = 0
+label-background = #fcd485
+label-foreground = #112
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume = <label-volume> <bar-volume>
+label-volume = VOL
+label-volume-foreground = ${root.foreground}
+
+label-muted = 🔇 muted
+label-muted-foreground = #666
+
+bar-volume-width = 10
+bar-volume-foreground-0 = #55aa55
+bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-2 = #55aa55
+bar-volume-foreground-3 = #55aa55
+bar-volume-foreground-4 = #55aa55
+bar-volume-foreground-5 = #f5a70a
+bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = false
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.foreground-alt}
+
+
+[module/alsa]
+type = internal/alsa
+format-volume =	墳 <label-volume>	
+;format-volume-prefix = 墳 
+format-volume-background = #A07Abb
+format-volume-foreground = #112
+label-muted =   Muted
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+format-muted-background = #A07Abb
+label-muted-foreground = #A112
+
+;[module/alsa]
+;type = internal/alsa
+;format-volume = <label-volume>
+;label-volume = 🌑 %percentage%%
+;label-volume-foreground = #112
+
+;format-muted-prefix = "🔇"
+;format-muted-background = #A07Abb
+;format-muted-foreground = #112
+;label-muted = muted
+
+;bar-volume-width = 10
+;bar-volume-foreground-0 = #A07Abb
+;bar-volume-foreground-1 = #A07Abb
+;bar-volume-foreground-2 = #A07Abb
+;bar-volume-foreground-3 = #A07Abb
+;bar-volume-foreground-4 = #A07Abb
+;bar-volume-foreground-5 = #A07Abb
+;bar-volume-foreground-6 = #A07Abb
+;bar-volume-gradient = false
+;bar-volume-indicator =
+;bar-volume-indicator-font = 2
+;bar-volume-fill = ─
+;bar-volume-fill-font = 2
+;bar-volume-empty = ─
+;bar-volume-empty-font = 2
+;bar-volume-empty-foreground = #A07Abb
+
+[module/sep2]
+type = custom/text
+content = "||"
+content-foreground = ${colors.background-alt}
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC
+full-at = 98
+
+format-charging = <animation-charging> <label-charging>
+format-charging-underline = #ffb52a
+
+format-discharging = <animation-discharging> <label-discharging>
+format-discharging-underline = ${self.format-charging-underline}
+
+format-full-prefix = " "
+format-full-prefix-foreground = ${colors.foreground-alt}
+format-full-underline = ${self.format-charging-underline}
+
+ramp-capacity-0 = 
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-foreground = ${colors.foreground-alt}
+
+animation-charging-0 = 
+animation-charging-1 = 
+animation-charging-2 = 
+animation-charging-foreground = ${colors.foreground-alt}
+animation-charging-framerate = 750
+
+animation-discharging-0 = 
+animation-discharging-1 = 
+animation-discharging-2 = 
+animation-discharging-foreground = ${colors.foreground-alt}
+animation-discharging-framerate = 750
+
+;[module/temperature]
+
+;type = internal/temperature
+;thermal-zone = 0
+;warn-temperature = 60
+
+;format = <ramp> <label>
+;format-underline = #fabc32
+;format-warn = <ramp> <label-warn>
+;format-warn-underline = ${self.format-underline}
+
+;label = %temperature-c%
+;label-warn = %temperature-c%
+;label-warn-foreground = ${colors.secondary}
+
+;ramp-0 = 
+;ramp-1 = 
+;ramp-2 = 
+;ramp-foreground = ${colors.foreground-alt}
+
+;[module/powermenu]
+;type = custom/text
+;content = 襤
+
+;content-foreground = ${color.white}
+;click-left = ~/.config/polybar/scripts/powermenu_alt
+
+[settings]
+screenchange-reload = true
+;compositing-background = xor
+;compositing-background = screen
+;compositing-foreground = source
+;compositing-border = over
+pseudo-transparency = true
+
+;[global/wm]
+;margin-top = 5
+;margin-bottom = 5
+
+; vim:ft=dosini

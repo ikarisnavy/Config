@@ -1,0 +1,16 @@
+
+[alsa]
+mixer-element=Master
+
+[audgui]
+filebrowser_win=175,59,672,480
+filesel_path=/home/ikari
+
+[skins]
+equalizer_x=92
+equalizer_y=503
+player_x=92
+player_y=387
+playlist_x=367
+playlist_y=387
+skin=/usr/share/audacious/Skins/Default
